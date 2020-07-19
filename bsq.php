@@ -11,9 +11,11 @@ function generateBoard($file): array {
         echo "un problème lors de l'ouverture du fichier";
         exit;
     }
+    // get 1st line of file
     $numLines = (int)fgets($handle);
 
     while ($line = fgets($handle)) {
+        // remove \n and convert to array and store new line of board
         $board[] = str_split(trim($line));
     }
 
@@ -26,6 +28,7 @@ function generateBoard($file): array {
 }
 
 function convertToMatrix($board) {
+    // fill board by 1 and 0
     foreach ($board as $line => $items){
         foreach ($items as $col => $value) {
             if ($value === EMPTY_VALUE_BOARD) {
@@ -53,6 +56,8 @@ function findLargestSquare($matrix) {
             }
             if ($cache[$i][$j] > $result) {
                 $result = $cache[$i][$j];
+
+                // get coord of bigger sqare
                 $x = $j;
                 $h = $i;
             }
@@ -61,14 +66,17 @@ function findLargestSquare($matrix) {
 
     return [
         'size' => $result,
-        'x' => $x,
-        'h' => $h,
+        'x' => $x, // horizontal
+        'h' => $h, // vertical
     ];
 }
 
 function fillLargestSquare(array $board, array $largestSquare) {
+    // start at line of end sqare
     for($i = 0, $line = $largestSquare['h']; $i  < $largestSquare['size']; $i++, $line--) {
+        // start at col of end sqare
         for($j = 0, $col = $largestSquare['x']; $j < $largestSquare['size']; $j++, $col--) {
+            // fill sqare by x
             $board[$line][$col]=SQUARE_BOARD;
         }
     }
