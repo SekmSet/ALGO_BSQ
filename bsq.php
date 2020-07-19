@@ -3,7 +3,7 @@
 const EMPTY_VALUE_BOARD = '.';
 const SQUARE_BOARD = 'x';
 
-function generateBoard($file): ?array {
+function generateBoard($file): array {
     $board = [];
 
     $handle = fopen($file, 'rb');
