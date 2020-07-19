@@ -42,38 +42,39 @@ function convertToMatrix($board) {
     return $board;
 }
 
-function findLargestSquare($matrix) {
-    $cache = $matrix;
-    $result = 0;
+function findLargestSquare($board) {
+    $matrix = $board;
+    $maxSizeSquare = 0;
     $x = null;
-    $h = null;
+    $y = null;
 
-    for ($i = 0; $i < count($matrix); $i++) {
-        for ($j = 0; $j < count($matrix[0]); $j++) {
-            if ($i === 0 | $j === 0) {}
-            else if ($matrix[$i][$j] > 0) {
-                $cache[$i][$j] = 1 + min($cache[$i][$j-1], $cache[$i-1][$j], $cache[$i-1][$j-1]);
+    for ($line = 0; $line < count($board); $line++) {
+        for ($col = 0; $col < count($board[0]); $col++) {
+            if ($line === 0 || $col === 0) {} // do nothing
+            else if ($matrix[$line][$col] > 0) {
+                $matrix[$line][$col] = 1 + min($matrix[$line][$col-1], $matrix[$line-1][$col], $matrix[$line-1][$col-1]);
             }
-            if ($cache[$i][$j] > $result) {
-                $result = $cache[$i][$j];
+
+            if ($matrix[$line][$col] > $maxSizeSquare) {
+                $maxSizeSquare = $matrix[$line][$col];
 
                 // get coord of bigger sqare
-                $x = $j;
-                $h = $i;
+                $x = $col;
+                $y = $line;
             }
         }
     }
 
     return [
-        'size' => $result,
+        'size' => $maxSizeSquare,
         'x' => $x, // horizontal
-        'h' => $h, // vertical
+        'y' => $y, // vertical
     ];
 }
 
 function fillLargestSquare(array $board, array $largestSquare) {
     // start at line of end sqare
-    for($i = 0, $line = $largestSquare['h']; $i  < $largestSquare['size']; $i++, $line--) {
+    for($i = 0, $line = $largestSquare['y']; $i  < $largestSquare['size']; $i++, $line--) {
         // start at col of end sqare
         for($j = 0, $col = $largestSquare['x']; $j < $largestSquare['size']; $j++, $col--) {
             // fill sqare by x
