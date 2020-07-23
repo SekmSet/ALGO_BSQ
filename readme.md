@@ -18,3 +18,8 @@ php bsq.php file
 perl generator.pl 10 15 2 > 10-15-2.out
 php bsq.php 10-15-2.out
 ```
+
+## Preview 
+
+![preview](.github/preview/Capture.png "preview programme")
+
